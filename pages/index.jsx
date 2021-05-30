@@ -1,6 +1,8 @@
 import {motion} from 'framer-motion';
 import {FaTwitterSquare, FaGithubSquare, FaInstagram} from 'react-icons/fa';
 
+import CardHeader from '../components/CardHeader';
+
 const container = {
   hidden: {opacity: 1, scale: 0},
   visible: {
@@ -27,12 +29,13 @@ const card =
 export default function Home() {
   return (
     <motion.main
-      className="flex flex-wrap box-border mb-4 p-8 w-screen h-full min-h-screen"
+      className="flex flex-col md:flex-row gap-4 box-border mb-4 p-8 w-screen h-full min-h-screen"
       variants={container}
       initial="hidden"
       animate="visible">
       <div className="w-full md:w-1/3 md:p-2">
         <motion.div className={card} variants={item}>
+          <CardHeader title="RESUME" />
           <div className="w-full text-left mb-8">
             <h1 className="text-3xl font-bold mb-4">John Vidal</h1>
             <ul>
@@ -142,7 +145,9 @@ export default function Home() {
         </motion.div>
       </div>
       <div className="w-full md:w-2/3 md:p-2">
-        <motion.div className={card} variants={item} />
+        <motion.div className={card} variants={item}>
+          <CardHeader title="BLOG" />
+        </motion.div>
       </div>
     </motion.main>
   );
