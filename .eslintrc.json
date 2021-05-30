@@ -13,6 +13,7 @@
   },
   "plugins": ["react"],
   "rules": {
+    "class-methods-use-this": "off",
     "import/no-extraneous-dependencies": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
