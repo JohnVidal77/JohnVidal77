@@ -1,7 +1,10 @@
+import Image from 'next/image';
 import {motion} from 'framer-motion';
 import {FaTwitterSquare, FaGithubSquare, FaInstagram} from 'react-icons/fa';
 
 import CardHeader from '../components/CardHeader';
+
+import PostController from '../controllers/post.controller';
 
 const container = {
   hidden: {opacity: 1, scale: 0},
@@ -26,7 +29,7 @@ const item = {
 const card =
   'relative md:h-full bg-white box-border border-2 border-black shadow-hard items-center pt-20 p-4';
 
-export default function Home() {
+export default function Home({allPosts}) {
   return (
     <motion.main
       className="flex flex-col md:flex-row gap-4 box-border mb-4 p-8 w-screen h-full min-h-screen"
@@ -147,8 +150,46 @@ export default function Home() {
       <div className="w-full md:w-2/3 md:p-2">
         <motion.div className={card} variants={item}>
           <CardHeader title="BLOG" />
+          <ul>
+            {allPosts.map((post) => (
+              <li key={post.slug}>
+                <div className="flex flex-col md:flex-row gap-4 p-2 border-b">
+                  <div className="w-full md:w-36 h-40 md:h-28 relative">
+                    <Image
+                      layout="fill"
+                      objectFit="cover"
+                      alt={post.slug}
+                      src={post.cover}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="font-bold mb-2">{post.title}</h2>
+                    <p>{post.excerpt}</p>
+                    <span className="block text-right text-sm">See more</span>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </div>
     </motion.main>
   );
+}
+
+export async function getStaticProps() {
+  const postController = new PostController();
+
+  const allPosts = postController.getAllPosts([
+    'title',
+    'date',
+    'slug',
+    'author',
+    'cover',
+    'excerpt',
+  ]);
+
+  return {
+    props: {allPosts},
+  };
 }
