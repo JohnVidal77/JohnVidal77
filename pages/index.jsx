@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import {motion} from 'framer-motion';
 import {FaTwitterSquare, FaGithubSquare, FaInstagram} from 'react-icons/fa';
 
@@ -153,21 +154,23 @@ export default function Home({allPosts}) {
           <ul>
             {allPosts.map((post) => (
               <li key={post.slug}>
-                <div className="flex flex-col md:flex-row gap-4 p-2 border-b">
-                  <div className="w-full md:w-36 h-40 md:h-28 relative">
-                    <Image
-                      layout="fill"
-                      objectFit="cover"
-                      alt={post.slug}
-                      src={post.cover}
-                    />
+                <Link href={`/post/${post.slug}`}>
+                  <div className="flex flex-col md:flex-row gap-4 p-2 border-b">
+                    <div className="w-full md:w-36 h-40 md:h-28 relative">
+                      <Image
+                        layout="fill"
+                        objectFit="cover"
+                        alt={post.slug}
+                        src={post.cover}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="font-bold mb-2">{post.title}</h2>
+                      <p>{post.excerpt}</p>
+                      <span className="block text-right text-sm">See more</span>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h2 className="font-bold mb-2">{post.title}</h2>
-                    <p>{post.excerpt}</p>
-                    <span className="block text-right text-sm">See more</span>
-                  </div>
-                </div>
+                </Link>
               </li>
             ))}
           </ul>
