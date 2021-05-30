@@ -1,7 +1,23 @@
+import Image from 'next/image';
 import {useRouter} from 'next/router';
+import {motion} from 'framer-motion';
+
+import WindowCard from '../../components/WindowCard';
 
 import PostController from '../../controllers/post.controller';
 import MarkdownToHtml from '../../services/markdownToHtml';
+
+const container = {
+  hidden: {opacity: 1, scale: 0},
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 function Post({post}) {
   const router = useRouter();
@@ -11,15 +27,31 @@ function Post({post}) {
   }
 
   return (
-    <div>
-      {router.isFallback && <h1>Is Loading</h1>}{' '}
-      {!router.isFallback && (
-        <main>
-          <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{__html: post.content}} />
-        </main>
-      )}
-    </div>
+    <motion.div
+      className="flex flex-col md:flex-row gap-4 box-border mb-4 p-4 md:p-8 w-screen h-full min-h-screen"
+      variants={container}
+      initial="hidden"
+      animate="visible">
+      <WindowCard>
+        {router.isFallback && <h1>Is Loading</h1>}{' '}
+        {!router.isFallback && (
+          <div className="w-full">
+            <main className="prose mx-auto">
+              <figure className="relative w-full h-48 md:h-72">
+                <Image
+                  layout="fill"
+                  objectFit="cover"
+                  src={post.cover}
+                  alt={post.slug}
+                />
+              </figure>
+              <h1>{post.title}</h1>
+              <div dangerouslySetInnerHTML={{__html: post.content}} />
+            </main>
+          </div>
+        )}
+      </WindowCard>
+    </motion.div>
   );
 }
 
@@ -35,7 +67,7 @@ export async function getStaticProps({params}) {
     'author',
     'content',
     'ogImage',
-    'coverImage',
+    'cover',
   ]);
 
   const content = await MarkdownToHtml(post.content || '');
