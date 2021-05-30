@@ -1,12 +1,24 @@
-import React from 'react';
+import {useRouter} from 'next/router';
 
 import PostController from '../../controllers/post.controller';
 import MarkdownToHtml from '../../services/markdownToHtml';
 
 function Post({post}) {
+  const router = useRouter();
+
+  if (!router.isFallback && !post?.slug) {
+    return <h1>404 - Not Found</h1>;
+  }
+
   return (
     <div>
-      <h1>Hello World, {post.title}</h1>
+      {router.isFallback && <h1>Is Loading</h1>}{' '}
+      {!router.isFallback && (
+        <main>
+          <h1>{post.title}</h1>
+          <div dangerouslySetInnerHTML={{__html: post.content}} />
+        </main>
+      )}
     </div>
   );
 }
