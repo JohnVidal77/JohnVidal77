@@ -5,6 +5,7 @@ class MyDocument extends Document {
     return (
       <Html lang="pt" className="bg-cyan">
         <Head>
+          <meta charset="UTF-8" />
           <meta httpEquiv="Content-Language" content="pt-br" />
           <meta name="robots" content="all" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />

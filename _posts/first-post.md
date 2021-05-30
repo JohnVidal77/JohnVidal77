@@ -3,6 +3,7 @@ title: 'Learn How to Pre-render Pages Using Static Generation with Next.js'
 excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 cover: '/assets/blog/first-post/cover.jpg'
 date: '2020-03-16T05:35:07.322Z'
+tags: 'JS, HTML, CSS, development, web'
 author:
   name: John Vidal
   picture: '/assets/authors/me.jpeg'

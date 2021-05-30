@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {motion} from 'framer-motion';
 
@@ -27,31 +28,41 @@ function Post({post}) {
   }
 
   return (
-    <motion.div
-      className="flex flex-col md:flex-row gap-4 box-border mb-4 p-4 md:p-8 w-screen h-full min-h-screen"
-      variants={container}
-      initial="hidden"
-      animate="visible">
-      <WindowCard>
-        {router.isFallback && <h1>Is Loading</h1>}{' '}
-        {!router.isFallback && (
-          <div className="w-full">
-            <main className="prose mx-auto">
-              <figure className="relative w-full h-48 md:h-72">
-                <Image
-                  layout="fill"
-                  objectFit="cover"
-                  src={post.cover}
-                  alt={post.slug}
-                />
-              </figure>
-              <h1>{post.title}</h1>
-              <div dangerouslySetInnerHTML={{__html: post.content}} />
-            </main>
-          </div>
-        )}
-      </WindowCard>
-    </motion.div>
+    <>
+      <Head>
+        <title>{post.title}</title>
+        <meta
+          name="keywords"
+          content="HTML, CSS, JavaScript, Development, Web Development"
+        />
+        <meta name="author" content={post.author.name} />
+      </Head>
+      <motion.div
+        className="flex flex-col md:flex-row gap-4 box-border mb-4 p-4 md:p-8 w-screen h-full min-h-screen"
+        variants={container}
+        initial="hidden"
+        animate="visible">
+        <WindowCard>
+          {router.isFallback && <h1>Is Loading</h1>}{' '}
+          {!router.isFallback && (
+            <div className="w-full">
+              <main className="prose mx-auto">
+                <figure className="relative w-full h-48 md:h-72">
+                  <Image
+                    layout="fill"
+                    objectFit="cover"
+                    src={post.cover}
+                    alt={post.slug}
+                  />
+                </figure>
+                <h1>{post.title}</h1>
+                <div dangerouslySetInnerHTML={{__html: post.content}} />
+              </main>
+            </div>
+          )}
+        </WindowCard>
+      </motion.div>
+    </>
   );
 }
 
